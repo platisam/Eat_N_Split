@@ -34,8 +34,17 @@ function FriendsList() {
   return (
     <ul>
       {friends.map((friend) => (
-        <li>{friend.name}</li>
+        <Friend friend={friend} key={friend.id} />
       ))}
     </ul>
+  );
+}
+
+function Friend({ friend }) {
+  return (
+    <li>
+      <img src={friend.image} alt={friend.name} />
+      <h3>{friend.name}</h3>
+    </li>
   );
 }
