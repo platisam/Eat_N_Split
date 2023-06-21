@@ -52,6 +52,7 @@ export default function App() {
       <div className="sidebar">
         <FriendsList
           friends={friends}
+          selectedFriend={selectedFriend}
           onSelectedFriend={handleSelectedFriend}
         />
 
@@ -67,13 +68,14 @@ export default function App() {
   );
 }
 
-function FriendsList({ friends, onSelectedFriend }) {
+function FriendsList({ friends, selectedFriend, onSelectedFriend }) {
   return (
     <ul>
       {friends.map((friend) => (
         <Friend
           friend={friend}
           key={friend.id}
+          selectedFriend={selectedFriend}
           onSelectedFriend={onSelectedFriend}
         />
       ))}
@@ -81,9 +83,11 @@ function FriendsList({ friends, onSelectedFriend }) {
   );
 }
 
-function Friend({ friend, onSelectedFriend }) {
+function Friend({ friend, selectedFriend, onSelectedFriend }) {
+  const isSelected = selectedFriend.id === friend.id;
+
   return (
-    <li>
+    <li className={isSelected ? "selected" : ""}>
       <img src={friend.image} alt={friend.name} />
       <h3>{friend.name}</h3>
 
@@ -99,7 +103,9 @@ function Friend({ friend, onSelectedFriend }) {
       )}
       {friend.balance === 0 && <p>You and {friend.name} are even</p>}
 
-      <Button onClick={() => onSelectedFriend(friend)}>Select</Button>
+      <Button onClick={() => onSelectedFriend(friend)}>
+        {isSelected ? "Close" : "Select"}
+      </Button>
     </li>
   );
 }
