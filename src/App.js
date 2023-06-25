@@ -50,8 +50,6 @@ export default function App() {
   }
 
   function handleSplitBill(value) {
-    console.log(value);
-
     setFriends((friends) =>
       friends.map((friend) =>
         friend.id === selectedFriend.id
@@ -59,6 +57,8 @@ export default function App() {
           : friend
       )
     );
+
+    setSelectedFriend(null);
   }
 
   return (
@@ -81,6 +81,7 @@ export default function App() {
         <FormSplitBill
           selectedFriend={selectedFriend}
           onSplitBill={handleSplitBill}
+          key={selectedFriend.id}
         />
       )}
     </div>
@@ -130,21 +131,22 @@ function Friend({ friend, selectedFriend, onSelectedFriend }) {
 }
 function FormAddFriend({ onAddFriend }) {
   const [name, setName] = useState("");
-  const [image, setImage] = useState("https://i.pravatar.cc/48");
+  const [image, setImage] = useState("https://i.pravatar.cc/48"); // set state
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!name || !image) return;
+    if (!name || !image) return; // early return
 
     const id = crypto.randomUUID();
     const newFriend = {
+      // new object
       id,
       name,
       image: `${image}?=${id}`,
       balance: 0,
     };
-    onAddFriend(newFriend);
+    onAddFriend(newFriend); // add new object
 
     setName("");
     setImage("https://i.pravatar.cc/48");
